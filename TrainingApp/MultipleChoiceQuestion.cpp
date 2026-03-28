@@ -2,12 +2,22 @@
 
 #include <algorithm>
 
+
+/**
+ * @brief Konstruktor inicjalizujący treść pytania i listę odpowiedzi
+ */
 MultipleChoiceQuestion::MultipleChoiceQuestion(const std::string& text,
                                                const std::vector<AnswerOption>& options) : Question(text)
 {
     this->options = options;
 }
 
+
+/**
+ * @brief Sprawdza poprawność odpowiedzi
+ * @param userAnswers Wektor odpowiedzi użytkownika
+ * @return true jeśli poprawne, false jeśli nie
+ */
 bool MultipleChoiceQuestion::checkAnswer(const std::vector<int>& userAnswers) const
 {
     std::vector<int> correctAnswers;

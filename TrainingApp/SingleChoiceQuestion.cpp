@@ -1,5 +1,6 @@
 #include "SingleChoiceQuestion.h"
 
+
 /**
  * @brief Konstruktor inicjalizujący treść pytania i listę odpowiedzi
  */
@@ -9,6 +10,7 @@ SingleChoiceQuestion::SingleChoiceQuestion(
 {
     this->options = options;
 }
+
 
 /**
  * @brief Sprawdza poprawność odpowiedzi

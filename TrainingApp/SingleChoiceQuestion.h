@@ -3,6 +3,7 @@
 
 #include "Question.h"
 
+
 /**
  * @class SingleChoiceQuestion
  * @brief Reprezentuje pytanie jednokrotnego wyboru.
@@ -20,6 +21,7 @@ public:
      */
     SingleChoiceQuestion(const std::string& text,
                          const std::vector<AnswerOption>& options);
+
 
     /**
      * @brief Sprawdza poprawność wybranej odpowiedzi

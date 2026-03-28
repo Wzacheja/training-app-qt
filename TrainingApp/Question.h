@@ -26,10 +26,12 @@ public:
      */
     Question(const std::string& text);
 
+
     /**
      * @brief Wirtualny destruktor.
      */
     virtual ~Question() = default;
+
 
     /**
      * @brief Zwraca treść pytania
@@ -37,11 +39,13 @@ public:
      */
     std::string getText() const;
 
+
     /**
      * @brief Zwraca listę dostępnych opcji odpowiedzi na pytanie
      * @return Wektor opcji odpowiedzi
      */
     std::vector<AnswerOption> getOptions() const;
+
 
     /**
      * @brief Sprawdza poprawność odpowiedzi użytkownika

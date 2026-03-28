@@ -3,6 +3,7 @@
 
 #include <string>
 
+
 /**
  * @class AnswerOption
  * @brief Reprezentuje pojedynczą opcje odpoiwedzi w pytaniu.
@@ -23,11 +24,13 @@ public:
      */
     AnswerOption(const std::string& text, bool isCorrect);
 
+
     /**
      * @brief Zwraca treść odpowiedzi
      * @return Treść odpowiedzi
      */
     std::string getText() const;
+
 
     /**
      * @brief Zwraca informację czy odpowiedź jest poprawna

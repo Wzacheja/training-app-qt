@@ -27,6 +27,11 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         Question.h Question.cpp
         MultipleChoiceQuestion.h MultipleChoiceQuestion.cpp
         SingleChoiceQuestion.h SingleChoiceQuestion.cpp
+        Note.h Note.cpp
+        TrainingMaterial.h TrainingMaterial.cpp
+        SubTopic.h SubTopic.cpp
+        Topic.h Topic.cpp
+        Chapter.h Chapter.cpp
     )
 # Define target properties for Android with Qt 6 as:
 #    set_property(TARGET TrainingApp APPEND PROPERTY QT_ANDROID_PACKAGE_SOURCE_DIR

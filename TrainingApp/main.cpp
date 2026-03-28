@@ -1,16 +1,29 @@
 #include "mainwindow.h"
 #include <QApplication>
 
+
+/*
 #include "MultipleChoiceQuestion.h"
 #include "SingleChoiceQuestion.h"
+*/
+
+
+#include "Chapter.h"
+#include "Topic.h"
+#include "SubTopic.h"
+#include "TrainingMaterial.h"
+#include "Note.h"
+
 
 #include <iostream>
+
 
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
     MainWindow w;
 
+    /*
     // Test klas pytań
 
     // Test SingleChoiceQuestion
@@ -76,7 +89,59 @@ int main(int argc, char *argv[])
     }
 
     std::cout << "\n\n";
+    */
 
+    // Test struktury kursu
+
+    std::cout << "COURSE STRUCTURE TEST\n\n";
+
+    TrainingMaterial mat1 ("M1", "Component location", "All components are localized ... ",
+                              {"ACMP", "W-T-F fairing", "LG NO DISPATCH"});
+
+    TrainingMaterial mat2 ("M2", "Component location", "All components are localized ... ",
+                          {});
+
+
+    Note note1("Pump is mounted in cartridge", "M1");
+    Note note2("Pump is used for APU start", "M2");
+
+
+    SubTopic sub1("AC Pump", note1);
+    sub1.addMaterial(mat1);
+
+    SubTopic sub2("DC Pump", note2);
+    sub2.addMaterial(mat2);
+
+
+    Topic top1("Components", "01/05/2026 10:00 UTC");
+    top1.addSubTopic(sub1);
+    top1.addSubTopic(sub2);
+
+    Chapter chap1(29, "HYDRAULIC POWER");
+    chap1.addTopic(top1);
+
+    // Wyświetlenie w konsoli
+
+    std::cout << "Chapter ATA " << chap1.getNumberATA() << " - " << chap1.getName() << "\n\n";
+
+    for (const Topic& t : chap1.getTopics())
+    {
+        std::cout << "-Topic: " << t.getName() << " - deadline: " << t.getPlannedCompletionDate() << "\n\n";
+
+        for (const SubTopic& s : t.getSubTopics())
+        {
+            std::cout << "--Sub-Topic: " << s.getName() << "\n";
+
+            for (const TrainingMaterial& m : s.getMaterials())
+            {
+                std::cout << "---Material title: " << m.getTitle() << "\n";
+                std::cout << "----Material content: " << m.getContent() << "\n";
+
+            }
+
+            std::cout << "---Note: " << s.getNote().getContent() << "\n\n";
+        }
+    }
 
     w.show();
     return a.exec();

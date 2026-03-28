@@ -3,6 +3,7 @@
 
 #include "Question.h"
 
+
 /**
  * @class MultipleChoiceQuestion
  * @brief Reprezentuje pytanie wielokrotnego wyboru.
@@ -20,6 +21,7 @@ public:
      */
     MultipleChoiceQuestion(const std::string& text,
                            const std::vector<AnswerOption>& options);
+
 
     /**
      * @brief Sprawdza poprawność wybranych odpowiedzi
