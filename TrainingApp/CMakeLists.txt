@@ -34,6 +34,7 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         Chapter.h Chapter.cpp
         Progress.h Progress.cpp
         QuizSession.h QuizSession.cpp
+        DataManager.h DataManager.cpp
     )
 # Define target properties for Android with Qt 6 as:
 #    set_property(TARGET TrainingApp APPEND PROPERTY QT_ANDROID_PACKAGE_SOURCE_DIR
@@ -54,6 +55,12 @@ else()
 endif()
 
 target_link_libraries(TrainingApp PRIVATE Qt${QT_VERSION_MAJOR}::Widgets)
+
+add_custom_command(TARGET TrainingApp POST_BUILD
+    COMMAND ${CMAKE_COMMAND} -E copy_directory
+            ${CMAKE_CURRENT_SOURCE_DIR}/data
+            $<TARGET_FILE_DIR:TrainingApp>/data
+)
 
 # Qt for iOS sets MACOSX_BUNDLE_GUI_IDENTIFIER automatically since Qt 6.1.
 # If you are developing for iOS or macOS you should consider setting an

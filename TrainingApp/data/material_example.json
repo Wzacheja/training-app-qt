@@ -1,0 +1,14 @@
+[
+  {
+    "materialId": "M1",
+    "title": "Component Location - ACMP",
+    "content": "All components are localized ... ",
+    "tags": ["ACMP", "W-T-F fairing", "LG NO DISPATCH"]
+  },
+  {
+    "materialId": "M2",
+    "title": "Component Location - DCMP",
+    "content": "All components are localized ... ",
+    "tags": ["DCMP"]
+  }
+]

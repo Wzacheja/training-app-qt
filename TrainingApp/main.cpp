@@ -1,12 +1,15 @@
 #include "mainwindow.h"
 #include <QApplication>
 
+#include "TrainingMaterial.h"
+#include "DataManager.h"
 
+/*
 #include "MultipleChoiceQuestion.h"
 #include "SingleChoiceQuestion.h"
 #include "QuizSession.h"
 #include "Progress.h"
-
+*/
 
 /*
 #include "Chapter.h"
@@ -28,6 +31,30 @@ int main(int argc, char *argv[])
 
     std::cout << std::fixed << std::setprecision(2);
 
+    // Test wczytywania materiału szkoleniowego
+
+    DataManager dataManager;
+    std::vector<TrainingMaterial> loadedMaterials =
+        dataManager.loadTrainingMaterials("data/material_example.json");
+
+    std::cout << "Loaded materials: " << loadedMaterials.size() << "\n\n";
+
+    for (const TrainingMaterial& material : loadedMaterials)
+    {
+        std::cout << " material ID: " << material.getMaterialId();
+        std::cout << "\n title: " << material.getTitle();
+        std::cout << "\n content: " << material.getContent();
+
+        std::cout << "\n tags: ";
+        for (const std::string& tag : material.getTags())
+        {
+            std::cout << tag << ", ";
+        }
+
+        std::cout << "\n\n";
+    }
+
+/*
     // Test sesji quizu i progressu
 
     // SingleChoiceQuestion
@@ -174,7 +201,7 @@ int main(int argc, char *argv[])
             std::cout << questID << "\n";
         }
     }
-
+*/
 /*
     // Test struktury kursu
 
