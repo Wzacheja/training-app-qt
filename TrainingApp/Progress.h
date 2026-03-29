@@ -1,0 +1,71 @@
+#ifndef PROGRESS_H
+#define PROGRESS_H
+
+#include <string>
+#include <vector>
+
+
+/**
+ * @class Progress
+ * @brief Reprezentuje postęp użytkownika i jego wyniki.
+ *
+ * Klasa przechowuje informację o ukończonych podtematach,
+ * wynikach testów i błędnie rozwiązanych pytaniach.
+ */
+class Progress
+{
+private:
+    std::vector<std::string> completedSubTopics;
+    std::vector<double> testResults;
+    std::vector<std::string> incorrectQuestionIDs;
+
+public:
+    /**
+     * @brief Konstruktor domyślny klasy Progress
+     */
+    Progress() = default;
+
+
+    /**
+     * @brief Zwraca listę ukończonych podtematów
+     * @return Wektor ukończonych podtematów
+     */
+    std::vector<std::string> getCompletedSubTopics() const;
+
+
+    /**
+     * @brief Zwraca listę wyników testów
+     * @return Wektor wyników testów
+     */
+    std::vector<double> getTestResults() const;
+
+
+    /**
+     * @brief Zwraca listę błędnie rozwiązanych pytań
+     * @return Wektor identyfikatorów błędnych pytań
+     */
+    std::vector<std::string> getIncorrectQuestionIDs() const;
+
+
+    /**
+     * @brief Oznacza podtemat jako ukończony
+     * @param subTopicName Nazwa ukończonego podtematu
+     */
+    void markSubTopicCompleted(const std::string& subTopicName);
+
+
+    /**
+     * @brief Dodaje wynik testu
+     * @param result Wynik testu
+     */
+    void addTestResult(double result);
+
+
+    /**
+     * @brief Dodaje identyfikator błędnie rozwiązanego pytania
+     * @param questionID Identyfikator błędnego pytania
+     */
+    void addIncorrectQuestion(const std::string& questionID);
+};
+
+#endif // PROGRESS_H

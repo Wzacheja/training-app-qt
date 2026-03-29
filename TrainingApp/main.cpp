@@ -2,20 +2,23 @@
 #include <QApplication>
 
 
-/*
 #include "MultipleChoiceQuestion.h"
 #include "SingleChoiceQuestion.h"
-*/
+#include "QuizSession.h"
+#include "Progress.h"
 
 
+/*
 #include "Chapter.h"
 #include "Topic.h"
 #include "SubTopic.h"
 #include "TrainingMaterial.h"
 #include "Note.h"
+*/
 
 
 #include <iostream>
+#include <iomanip>
 
 
 int main(int argc, char *argv[])
@@ -23,10 +26,11 @@ int main(int argc, char *argv[])
     QApplication a(argc, argv);
     MainWindow w;
 
-    /*
-    // Test klas pytań
+    std::cout << std::fixed << std::setprecision(2);
 
-    // Test SingleChoiceQuestion
+    // Test sesji quizu i progressu
+
+    // SingleChoiceQuestion
     std::vector<AnswerOption> singleOptions = {
         AnswerOption("EMB 190-100", false),
         AnswerOption("ERJ 190-100", true),
@@ -35,29 +39,15 @@ int main(int argc, char *argv[])
 
     SingleChoiceQuestion q1("Which shortcut is correct for Embraer 190?", singleOptions);
 
-    std::cout << "SINGLE CHOICE QUESTION TEST\n\n";
-    std::cout << "Question: " << q1.getText() << "\n";
+    std::cout << "\nQuestion: " << q1.getText() << "\n";
 
     for(size_t i=0; i < q1.getOptions().size(); i++)
     {
         std::cout << i << " - " << q1.getOptions()[i].getText() << "\n";
     }
 
-    // std::vector<int> a1 = {1}; //poprawna
-     std::vector<int> a1 = {0}; //niepoprawna
 
-    if (q1.checkAnswer(a1))
-    {
-        std::cout << "   Correct answer\n";
-    }
-    else
-    {
-        std::cout << "---Wrong answer\n";
-    }
-
-    std::cout << "\n\n";
-
-    // Test MultipleChoiceQuestion
+    // MultipleChoiceQuestion
     std::vector<AnswerOption> multipleOptions = {
         AnswerOption("Aileron", true),
         AnswerOption("Rudder", true),
@@ -68,29 +58,124 @@ int main(int argc, char *argv[])
 
     MultipleChoiceQuestion q2("Which of listed surfaces are classified as Primary Flight Controls?", multipleOptions);
 
-    std::cout << "MULTIPLE CHOICE QUESTION TEST\n\n";
-    std::cout << "Question: " << q2.getText() << "\n";
+    std::cout << "\nQuestion: " << q2.getText() << "\n";
 
     for(size_t i=0; i < q2.getOptions().size(); i++)
     {
         std::cout << i << " - " << q2.getOptions()[i].getText() << "\n";
     }
 
-     std::vector<int> a2 = {0,1,4}; //poprawne
-    // std::vector<int> a2 = {0,1}; //niepoprawne
+    // SingleChoiceQuestion v2 - do testu wyświetlania wyniku w %
+    std::vector<AnswerOption> singleOptions2 = {
+        AnswerOption("4 points", false),
+        AnswerOption("5 points", false),
+        AnswerOption("3 points", true)
+    };
 
-    if (q2.checkAnswer(a2))
+    SingleChoiceQuestion q12("How many jacking points for complete aircraft jacking Embraer 190 have?", singleOptions2);
+
+    std::cout << "\nQuestion: " << q12.getText() << "\n";
+
+    for(size_t i=0; i < q12.getOptions().size(); i++)
     {
-        std::cout << "   Correct answers\n";
+        std::cout << i << " - " << q12.getOptions()[i].getText() << "\n";
+    }
+
+
+    // Quiz session
+    QuizSession qSession;
+    qSession.addQuestion(&q1);
+    qSession.addQuestion(&q2);
+    qSession.addQuestion(&q12);
+
+    //std::vector<int> a1 = {1}; //poprawna
+    std::vector<int> a1 = {0}; //niepoprawna
+
+    std::vector<int> a2 = {0,1,4}; //poprawne
+    //std::vector<int> a2 = {0,1}; //niepoprawne
+
+    std::vector<int> a12 = {2}; //poprawna
+    //std::vector<int> a12 = {0}; //poprawna
+
+    qSession.answerQuestion(0,a1);
+    qSession.answerQuestion(1,a2);
+    qSession.answerQuestion(2,a12);
+
+    qSession.calculateScore();
+
+    std::cout << "\n   QUIZ SESSION\n\n";
+    std::cout << "Number of questions: " << qSession.getQuestionCount() << "\n";
+    std::cout << "Score: " << qSession.getScore() << "/" << qSession.getQuestionCount() <<
+        "   " << qSession.getPercentageScore() << "%\n";
+
+
+    // Progress
+    Progress prog;
+
+    prog.addTestResult(qSession.getPercentageScore());
+
+    prog.markSubTopicCompleted("Airplane General");
+    //prog.markSubTopicCompleted("Hydraulics");
+
+    // ręczne sprawdzenie błędnych pytań
+    if (!q1.checkAnswer(a1))
+    {
+        prog.addIncorrectQuestion("Q1");
+    }
+
+    if (!q2.checkAnswer(a2))
+    {
+        prog.addIncorrectQuestion("Q2");
+    }
+
+    if (!q12.checkAnswer(a12))
+    {
+        prog.addIncorrectQuestion("Q3");
+    }
+
+
+    if (prog.getCompletedSubTopics().size() == 0)
+    {
+        std::cout << "\nNo completed material available\n";
     }
     else
     {
-        std::cout << "---Wrong answers \n";
+        std::cout << "\n   PROGRESS\n\n" << "Completed SubTopics:\n";
+        for (const std::string& subTopic : prog.getCompletedSubTopics())
+        {
+            std::cout << subTopic << "\n";
+        }
     }
 
-    std::cout << "\n\n";
-    */
 
+    if (prog.getTestResults().size() == 0)
+    {
+        std::cout << "\nNo quiz results available\n";
+    }
+    else
+    {
+        std::cout << "\nQuiz results: \n";
+        for (const double& res : prog.getTestResults())
+        {
+            std::cout << res << "%\n";
+        }
+    }
+
+
+    if (prog.getIncorrectQuestionIDs().size() == 0)
+    {
+        std::cout << "\nNo incorrect questions available\n";
+    }
+    else
+    {
+        std::cout << "\nIncorrect questions ID's: \n";
+        for (const std::string& questID : prog.getIncorrectQuestionIDs())
+        {
+            std::cout << questID << "\n";
+        }
+    }
+
+/*
     // Test struktury kursu
 
     std::cout << "COURSE STRUCTURE TEST\n\n";
@@ -142,6 +227,7 @@ int main(int argc, char *argv[])
             std::cout << "---Note: " << s.getNote().getContent() << "\n\n";
         }
     }
+*/
 
     w.show();
     return a.exec();

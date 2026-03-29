@@ -32,6 +32,8 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         SubTopic.h SubTopic.cpp
         Topic.h Topic.cpp
         Chapter.h Chapter.cpp
+        Progress.h Progress.cpp
+        QuizSession.h QuizSession.cpp
     )
 # Define target properties for Android with Qt 6 as:
 #    set_property(TARGET TrainingApp APPEND PROPERTY QT_ANDROID_PACKAGE_SOURCE_DIR
