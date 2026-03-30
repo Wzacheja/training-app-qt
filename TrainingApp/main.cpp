@@ -1,12 +1,13 @@
 #include "mainwindow.h"
 #include <QApplication>
 
-#include "TrainingMaterial.h"
-#include "DataManager.h"
-#include "QuizSession.h"
+#include "Progress.h"
 
 
 /*
+#include "TrainingMaterial.h"
+#include "DataManager.h"
+#include "QuizSession.h"
 #include "Chapter.h"
 #include "Topic.h"
 #include "SubTopic.h"
@@ -14,13 +15,14 @@
 #include "Note.h"
 #include "MultipleChoiceQuestion.h"
 #include "SingleChoiceQuestion.h"
-#include "Progress.h"
 */
 
 
 #include <iostream>
 #include <iomanip>
 
+
+/*
 void runQuizFromSubTopic(const SubTopic& subTopic)
 {
     // Quiz session
@@ -59,6 +61,7 @@ void runQuizFromSubTopic(const SubTopic& subTopic)
     std::cout << "\nScore: " << qSession.getScore() << "/" << qSession.getQuestionCount() <<
         "\t" << qSession.getPercentageScore() << "%\n";
 }
+*/
 
 
 int main(int argc, char *argv[])
@@ -68,6 +71,50 @@ int main(int argc, char *argv[])
 
     std::cout << std::fixed << std::setprecision(2);
 
+    // Test odczytu i zapisu progressu
+
+    Progress prog;
+
+    // Odczyt
+
+    prog.loadFromFile("user_data/progress.json");
+
+    std::cout << "\nLoaded progress:";
+    std::cout << "\n\tCompleted topics: ";
+    for (const std::string& topic : prog.getCompletedSubTopics())
+    {
+        std::cout << "\n\t\t" << topic;
+    }
+
+    std::cout << "\n\tTests results: ";
+    for (const double result : prog.getTestResults())
+    {
+        std::cout << "\n\t\t" << result;
+    }
+
+    std::cout << "\n\tIncorrect questions IDs: ";
+    for (const std::string& qId : prog.getIncorrectQuestionIDs())
+    {
+        std::cout << "\n\t\t" << qId;
+    }
+
+    // Zmiana progresu
+
+    prog.markSubTopicCompleted("Added SubTopic to Prog");
+    prog.addTestResult(33.33);
+    prog.addIncorrectQuestion("Q99");
+
+    // Zapis
+
+    if(prog.saveToFile("user_data/progress.json"))
+    {
+        std::cout << "\n\nProgress saved";
+    }
+
+    std::cout << "\n\n";
+
+
+/*
     // Test wczytywania struktury kursu
 
     DataManager dataManager;
@@ -150,7 +197,7 @@ int main(int argc, char *argv[])
 
         runQuizFromSubTopic(sub);
     }
-
+*/
 /*
     // Test wczytywania materiału szkoleniowego
 

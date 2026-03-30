@@ -11,6 +11,9 @@
  *
  * Klasa przechowuje informację o ukończonych podtematach,
  * wynikach testów i błędnie rozwiązanych pytaniach.
+ *
+ * Klasa pozwala wczytać postęp z pliku JSON oraz
+ * zapisać go do pliku JSON.
  */
 class Progress
 {
@@ -66,6 +69,22 @@ public:
      * @param questionID Identyfikator błędnego pytania
      */
     void addIncorrectQuestion(const std::string& questionID);
+
+
+    /**
+     * @brief Wczytuje progress z pliku JSON
+     * @param filePath Ścieżka do pliku JSON
+     * @return true jeśli udało się wczytać dane, false jeśli nie
+     */
+    bool loadFromFile(const std::string& filePath);
+
+
+    /**
+     * @brief Zapisuje progress do pliku JSON
+     * @param filePath Ścieżka do pliku JSON
+     * @return true jeśli udało się zapisać dane, false jeśli nie
+     */
+    bool saveToFile(const std::string& filePath);
 };
 
 #endif // PROGRESS_H
