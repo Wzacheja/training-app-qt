@@ -31,6 +31,54 @@ int main(int argc, char *argv[])
 
     std::cout << std::fixed << std::setprecision(2);
 
+    // Test wczytywania struktury kursu
+
+    DataManager dataManager;
+    std::vector<Chapter> loadedCourse =
+        dataManager.loadCourse("data/course_struct.json");
+
+    std::cout << "Loaded chapters: " << loadedCourse.size();
+
+    for (const Chapter& chapter : loadedCourse)
+    {
+        std::cout << "\n\nChapter ATA: " << chapter.getNumberATA() << " - " << chapter.getName();
+
+        for (const Topic& topic : chapter.getTopics())
+        {
+            std::cout << "\n\tTopic: " << topic.getName()
+                      << " (deadline: " << topic.getPlannedCompletionDate() << ")";
+
+            for (const SubTopic& subTopic : topic.getSubTopics())
+            {
+                std::cout << "\n\t\tSubTopic: " << subTopic.getName();
+
+                for (const TrainingMaterial& material : subTopic.getMaterials())
+                {
+                    std::cout << "\n\t\t\tTraining material ID: " << material.getMaterialId()
+                              << "\n\t\t\tTitle: " << material.getTitle()
+                              << "\n\t\t\tContent: " << material.getContent()
+                              << "\n\t\t\tTags: ";
+
+                    for (const std::string& tag : material.getTags())
+                    {
+                        std::cout << tag << ", ";
+                    }
+                    std::cout << "\n";
+                }
+
+                std::cout << "\n\t\tNote: " << subTopic.getNote().getContent();
+
+                std::cout <<"\n";
+            }
+            std::cout << "\n";
+        }
+        std::cout << "\n";
+    }
+
+
+    std::cout << "\n\n";
+
+/*
     // Test wczytywania materiału szkoleniowego
 
     DataManager dataManager;
@@ -53,7 +101,7 @@ int main(int argc, char *argv[])
 
         std::cout << "\n\n";
     }
-
+*/
 /*
     // Test sesji quizu i progressu
 
