@@ -1,0 +1,177 @@
+[
+  {
+    "numberATA": 27,
+    "name": "FLIGHT CONTROLS",
+    "topics": [
+      {
+        "name": "Components",
+        "plannedCompletionDate": "01/05/2026 15:00 UTC",
+        "subTopics": [
+          {
+            "name": "FCM - Flight Controls Module",
+            "note": {
+              "content": "After replacement rigging is required",
+              "relatedMaterialId": "27-M1"
+            },
+            "materials": [
+              {
+                "materialId": "27-M1-1",
+                "title": "Component location",
+                "content": "FCM is located in MAU1",
+                "tags": ["FCM", "MAU 1", "AVNX MAU 1A FAIL"]
+              }
+            ],
+            "questions": [
+              {
+                "type": "single",
+                "text": "Where is the FCM located?",
+                "options": [
+                  { "text": "MAU 1", "isCorrect": true },
+                  { "text": "Cockpit", "isCorrect": false },
+                  { "text": "Aft E-bay", "isCorrect": false }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Operation",
+        "plannedCompletionDate": "10/05/2026 15:00 UTC",
+        "subTopics": [
+          {
+            "name": "Roll",
+            "note": {
+              "content": "Roll is realised using ailerons",
+              "relatedMaterialId": "27-M2"
+            },
+            "materials": [
+              {
+                "materialId": "27-M2-1",
+                "title": "Normal operation",
+                "content": "In normal conditions system ...",
+                "tags": ["Aileron", "Wing", "FCND"]
+              }
+            ],
+            "questions": [
+              {
+                "type": "single",
+                "text": "Which surface is mainly used to control roll?",
+                "options": [
+                  { "text": "Aileron", "isCorrect": true },
+                  { "text": "Rudder", "isCorrect": false },
+                  { "text": "Elevator", "isCorrect": false }
+                ]
+              },
+              {
+                "type": "multiple",
+                "text": "Which surfaces are classified as primary flight controls?",
+                "options": [
+                  { "text": "Aileron", "isCorrect": true },
+                  { "text": "Rudder", "isCorrect": true },
+                  { "text": "Flaps", "isCorrect": false },
+                  { "text": "Horizontal Stabilizer", "isCorrect": false},
+                  { "text": "Elevator", "isCorrect": true }
+                ]
+              },
+              {
+                "type": "single",
+                "text": "Roll steering is available via...",
+                "options": [
+                  { "text": "F-B-W system wires", "isCorrect": false },
+                  { "text": "conventional control cable", "isCorrect": true },
+                  { "text": "F-B-L system optic fibers", "isCorrect": false }
+                ]
+              }
+            ]
+          },
+          {
+            "name": "Pitch",
+            "note": {
+              "content": "Pitch is realised using elevator",
+              "relatedMaterialId": "27-M3"
+            },
+            "materials": [
+              {
+                "materialId": "27-M3-1",
+                "title": "Normal operation",
+                "content": "In normal conditions system ...",
+                "tags": ["Elevator", "Horizontal Stabiliser", "FCND"]
+              },
+              {
+                "materialId": "27-M3-2",
+                "title": "Abnormal operation",
+                "content": "In abnormal conditions system ...",
+                "tags": []
+              }
+            ],
+            "questions": [
+              {
+                "type": "single",
+                "text": "Which surface is mainly used to control pitch?",
+                "options": [
+                  { "text": "Aileron", "isCorrect": false },
+                  { "text": "Rudder", "isCorrect": false },
+                  { "text": "Elevator", "isCorrect": true }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "numberATA": 29,
+    "name": "HYDRAULIC POWER",
+    "topics": [
+      {
+        "name": "Components",
+        "plannedCompletionDate": "01/05/2026 10:00 UTC",
+        "subTopics": [
+          {
+            "name": "AC Pump",
+            "note": {
+              "content": "Pump is mounted in cartridge",
+              "relatedMaterialId": "29-M1"
+            },
+            "materials": [
+              {
+                "materialId": "29-M1-1",
+                "title": "Component location",
+                "content": "All components are localized ...",
+                "tags": ["ACMP", "W-T-F fairing", "LG NO DISPATCH"]
+              }
+            ]
+          },
+          {
+            "name": "DC Pump",
+            "note": {
+              "content": "Pump is used for APU start",
+              "relatedMaterialId": "29-M2"
+            },
+            "materials": [
+              {
+                "materialId": "29-M2-1",
+                "title": "DC Pump overview",
+                "content": "DC pump is used during APU start ...",
+                "tags": ["DCP", "APU", "START"]
+              }
+            ],
+            "questions": [
+              {
+                "type": "single",
+                "text": "How many DC fuel pumps ERJ-190 have?",
+                "options": [
+                  { "text": "Two - one per fuel tank", "isCorrect": false },
+                  { "text": "One", "isCorrect": true },
+                  { "text": "Two - main and standby in the same fuel tank", "isCorrect": false }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+]

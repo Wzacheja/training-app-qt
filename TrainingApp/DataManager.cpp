@@ -5,6 +5,9 @@
 #include <QJsonDocument>
 #include <QJsonObject>
 
+#include "SingleChoiceQuestion.h"
+#include "MultipleChoiceQuestion.h"
+
 /**
  * @brief Wczytuje materiały szkoleniowe z pliku JSON
  */
@@ -146,6 +149,39 @@ std::vector<Chapter> DataManager::loadCourse(const std::string& filePath) const
                     TrainingMaterial material(materialId, title, content, tags);
 
                     subTopic.addMaterial(material);
+                }
+
+                QJsonArray questionsArray = subTopicObject["questions"].toArray();
+
+                for (qsizetype m = 0; m < questionsArray.size(); m++)
+                {
+                    QJsonObject questionObject = questionsArray.at(m).toObject();
+
+                    std::string questionType = questionObject["type"].toString().toStdString();
+                    std::string questionText = questionObject["text"].toString().toStdString();
+
+                    std::vector<AnswerOption> options;
+                    QJsonArray optionsArray = questionObject["options"].toArray();
+
+                    for (qsizetype n = 0; n < optionsArray.size(); n++)
+                    {
+                        QJsonObject optionObject = optionsArray.at(n).toObject();
+
+                        std::string optionText = optionObject["text"].toString().toStdString();
+                        bool isCorrect = optionObject["isCorrect"].toBool();
+
+                        AnswerOption option (optionText,isCorrect);
+                        options.push_back(option);
+                    }
+
+                    if (questionType == "single")
+                    {
+                        subTopic.addQuestion(new SingleChoiceQuestion(questionText, options));
+                    }
+                    else if (questionType == "multiple")
+                    {
+                        subTopic.addQuestion(new MultipleChoiceQuestion(questionText, options));
+                    }
                 }
                 topic.addSubTopic(subTopic);
             }

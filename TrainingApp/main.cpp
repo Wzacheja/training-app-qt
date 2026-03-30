@@ -3,13 +3,8 @@
 
 #include "TrainingMaterial.h"
 #include "DataManager.h"
-
-/*
-#include "MultipleChoiceQuestion.h"
-#include "SingleChoiceQuestion.h"
 #include "QuizSession.h"
-#include "Progress.h"
-*/
+
 
 /*
 #include "Chapter.h"
@@ -17,11 +12,53 @@
 #include "SubTopic.h"
 #include "TrainingMaterial.h"
 #include "Note.h"
+#include "MultipleChoiceQuestion.h"
+#include "SingleChoiceQuestion.h"
+#include "Progress.h"
 */
 
 
 #include <iostream>
 #include <iomanip>
+
+void runQuizFromSubTopic(const SubTopic& subTopic)
+{
+    // Quiz session
+    QuizSession qSession;
+
+    for (Question* q : subTopic.getQuestions())
+    {
+        qSession.addQuestion(q);
+    }
+
+    std::cout << "\n   QUIZ SESSION\n\n";
+    std::cout << "Number of questions: " << qSession.getQuestionCount() << "\n";
+
+    int index = 0;
+
+    for (Question* q : subTopic.getQuestions())
+    {
+        std::cout << "\nQuestion: " << q->getText();
+
+        const std::vector<AnswerOption> options = q->getOptions();
+
+        for (size_t i = 0; i < options.size(); i++)
+        {
+            std::cout << "\n\t" << i << " - " << options[i].getText();
+        }
+
+        std::vector<int> userAnswer = {0}; //poprawna
+        //std::vector<int> userAnswer = {1}; //niepoprawna
+
+        qSession.answerQuestion(index,userAnswer);
+        index++;
+    }
+
+    qSession.calculateScore();
+
+    std::cout << "\nScore: " << qSession.getScore() << "/" << qSession.getQuestionCount() <<
+        "\t" << qSession.getPercentageScore() << "%\n";
+}
 
 
 int main(int argc, char *argv[])
@@ -35,7 +72,7 @@ int main(int argc, char *argv[])
 
     DataManager dataManager;
     std::vector<Chapter> loadedCourse =
-        dataManager.loadCourse("data/course_struct.json");
+        dataManager.loadCourse("data/course_struct+questions.json");
 
     std::cout << "Loaded chapters: " << loadedCourse.size();
 
@@ -66,8 +103,38 @@ int main(int argc, char *argv[])
                     std::cout << "\n";
                 }
 
-                std::cout << "\n\t\tNote: " << subTopic.getNote().getContent();
+                std::cout << "\n\t\tNote: " << subTopic.getNote().getContent() << "\n";
 
+                std::cout << "\n\t\tQuestions: ";
+
+                if (subTopic.getQuestions().empty())
+                {
+                    std::cout << "\n\t\t\tNo questions available";
+                }
+                else
+                {
+                    for (const Question* question : subTopic.getQuestions())
+                    {
+                        std::cout << "\n\t\t\tQuestion: " << question->getText();
+
+                        const std::vector<AnswerOption> options = question->getOptions();
+
+                        for (size_t i = 0; i < options.size(); i++)
+                        {
+                            std::cout << "\n\t\t\t\t" << i << " - " << options[i].getText();
+                        }
+
+                        for (size_t j = 0; j < options.size(); j++)
+                        {
+                            if (options[j].getIsCorrect())
+                            {
+                                std::cout << "\n\t\t\tCorrect: " << j << " - " << options[j].getText();
+                            }
+                        }
+                        std::cout <<"\n";
+                    }
+                    std::cout <<"\n";
+                }
                 std::cout <<"\n";
             }
             std::cout << "\n";
@@ -75,8 +142,14 @@ int main(int argc, char *argv[])
         std::cout << "\n";
     }
 
-
     std::cout << "\n\n";
+
+    if (!loadedCourse.empty())
+    {
+        const SubTopic& sub = loadedCourse[0].getTopics()[0].getSubTopics()[0];
+
+        runQuizFromSubTopic(sub);
+    }
 
 /*
     // Test wczytywania materiału szkoleniowego
@@ -170,7 +243,7 @@ int main(int argc, char *argv[])
     //std::vector<int> a2 = {0,1}; //niepoprawne
 
     std::vector<int> a12 = {2}; //poprawna
-    //std::vector<int> a12 = {0}; //poprawna
+    //std::vector<int> a12 = {0}; //niepoprawna
 
     qSession.answerQuestion(0,a1);
     qSession.answerQuestion(1,a2);
