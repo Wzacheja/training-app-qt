@@ -15,6 +15,42 @@ TrainingMaterial::TrainingMaterial(const std::string& materialId,
 
 
 /**
+ * @brief Normalizuje tekst - wycina spacje i entery przed oraz za tekstem,
+ * a oprócz tego zmienia wszystkie litery na DUŻE.
+*/
+std::string TrainingMaterial::normalize(const std::string& text) const
+{
+    std::size_t start = 0;
+
+    while (start < text.size() && std::isspace(static_cast<unsigned char>(text[start])))
+    {
+        start++;
+    }
+
+    if(start == text.size())
+    {
+        return "";
+    }
+
+    std::size_t end = text.size()-1;
+
+    while (end > start && std::isspace(static_cast<unsigned char>(text[end])))
+    {
+        end--;
+    }
+
+    std::string normalizedText = text.substr(start,end-start+1);
+
+    for(char& ch : normalizedText)
+    {
+        ch = static_cast<char>(std::toupper(static_cast<unsigned char>(ch)));
+    }
+
+    return normalizedText;
+}
+
+
+/**
  * @brief Zwraca ID materiału
  */
 std::string TrainingMaterial::getMaterialId() const
@@ -57,12 +93,11 @@ bool TrainingMaterial::hasTag(const std::string& tag) const
 {
     for (const std::string& currentTag : tags)
     {
-        if (currentTag == tag)
+        if (normalize(currentTag) == normalize(tag) && normalize(tag) != "")
         {
             return true;
         }
     }
-
     return false;
 }
 

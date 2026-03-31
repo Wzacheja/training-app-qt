@@ -1,10 +1,12 @@
 #include "mainwindow.h"
 #include <QApplication>
 
-#include "Progress.h"
-
+#include "AppController.h"
+#include "SearchService.h"
+#include "TrainingMaterial.h"
 
 /*
+#include "Progress.h"
 #include "TrainingMaterial.h"
 #include "DataManager.h"
 #include "QuizSession.h"
@@ -71,6 +73,64 @@ int main(int argc, char *argv[])
 
     std::cout << std::fixed << std::setprecision(2);
 
+
+    // Test kontrolera aplikacji i wyszukiwarki
+
+    AppController controler;
+
+    controler.loadCourse("data/course_struct+questions.json");
+    controler.loadProgress("user_data/progress.json");
+
+    std::vector<Chapter> course = controler.getCourse();
+
+    // Test wywołania QuizSession z poziomu AppControlera
+    if (!course.empty())
+    {
+        const SubTopic& subTop = course[0].getTopics()[0].getSubTopics()[0];
+
+        controler.startQuiz(subTop);
+        controler.answerCurrentQuestion(0, {0});
+        controler.finishQuiz();
+        controler.markSubTopicCompleted(subTop.getName());
+
+        if (controler.saveProgress("user_data/progress.json"))
+        {
+            std::cout << "\n\nCOURSE PROGRESS SAVED";
+        }
+    }
+
+    // Test wyszukiwarki - wywołany z poziomu AppControllera
+
+    std::vector<std::string> allTags = controler.getAllTags();
+
+    if (allTags.empty())
+    {
+        std::cout << "\n\nNo tags were included in course";
+    }
+    else
+    {
+        std::cout << "\n\nAvailable tags in course:";
+        for (std::string& tag : allTags)
+        {
+            std::cout << "\n\t" << tag;
+        }
+        std::cout << "\n\n";
+    }
+
+    std::string tagToFind = "     FCND "; // tag do znalezienia
+
+    std::vector<TrainingMaterial> search = controler.searchByTag(tagToFind);
+
+    std::cout << "\n\nTag to find: " << tagToFind
+              << "\nSearch results:";
+    for (const TrainingMaterial& material : search)
+    {
+        std::cout << "\n\t" << material.getMaterialId() << " - " << material.getTitle();
+    }
+
+    std::cout << "\n\n";
+
+/*
     // Test odczytu i zapisu progressu
 
     Progress prog;
@@ -112,8 +172,7 @@ int main(int argc, char *argv[])
     }
 
     std::cout << "\n\n";
-
-
+*/
 /*
     // Test wczytywania struktury kursu
 

@@ -19,6 +19,15 @@ private:
     std::string content;
     std::vector<std::string> tags;
 
+
+    /**
+     * @brief Normalizuje tekst - wycina białe znaki z początku i końca tekstu,
+     * oraz zmienia wszystkie litery na WIELKIE.
+     * @param text Tekst do znormalizowania
+     * @return Znormalizowany teskt
+     */
+    std::string normalize(const std::string& text) const;
+
 public:
     /**
      * @brief Konstruktor klasy TrainingMaterial
